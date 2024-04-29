@@ -73,6 +73,12 @@ const Intermediate = ({ pageProps, setIsAuthenticated }: IntermediateProps) => {
     setSignedInWithoutSpotify(false);
   };
 
+  const handleBackClick = () => {
+    setSignedInWithSpotify(false);
+    window.location.hash = "";
+    setSignedInWithoutSpotify(false);
+  };
+
   const handleSpotifyLoginSuccess = () => {
     console.log("Spotify login successful");
     setSignedInWithSpotify(true);
@@ -131,11 +137,17 @@ const Intermediate = ({ pageProps, setIsAuthenticated }: IntermediateProps) => {
             </div>
           ))}
         </div>
+        <p>{playlistChoice}</p>
+        <p>{genreChoice}</p>
 
-        <div>
-          <button onClick={handleContinue}>Continue</button>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
+        <button onClick={handleContinue}>Continue</button>
+        <button onClick={handleBackClick}
+        style={{ marginTop: "20px"}}>
+        {"back"}
+      </button>
+        <button onClick={handleLogout} style={{ marginTop: "20px" }}>
+          Logout
+        </button>
       </div>
     );
   }
@@ -172,10 +184,18 @@ const Intermediate = ({ pageProps, setIsAuthenticated }: IntermediateProps) => {
           ))}
         </div>
 
-        <div>
-          <button onClick={handleContinue}>Continue</button>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
+        <p>{playlistChoice}</p>
+        <p>{genreChoice}</p>
+
+        <button onClick={handleContinue}>Continue</button>
+        <button 
+        onClick={handleBackClick}
+        style={{ marginTop: "20px"}}>
+        {"back"}
+        </button>
+        <button onClick={handleLogout} style={{ marginTop: "20px" }}>
+          Logout
+        </button>
       </div>
     );
   }
@@ -187,13 +207,19 @@ const Intermediate = ({ pageProps, setIsAuthenticated }: IntermediateProps) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        flexDirection: "column",
+        gap: "1em",
       }}
     >
       <AccountLogin onLoginSuccess={handleSpotifyLoginSuccess} />
       <button onClick={() => setSignedInWithoutSpotify(true)}>
         Continue without signing into Spotify
       </button>
-      <button onClick={handleLogout} style={{ marginLeft: "20px" }}>
+      <button onClick={handleLogout}>Logout</button>
+      <button
+        onClick={handleLogout}
+        style={{ marginLeft: "10px", marginRight: "10px" }}
+      >
         Logout
       </button>
     </div>
