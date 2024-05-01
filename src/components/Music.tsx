@@ -160,6 +160,8 @@ const Card = ({ songs, appRef }: CardProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
+  const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+
   useEffect(() => {
     async function getBlob(filePath: string): Promise<Blob> {
       return new Promise((resolve, reject) => {
@@ -179,11 +181,13 @@ const Card = ({ songs, appRef }: CardProps) => {
       setPlayTime(0);
     });
 
-    document.getElementById(
-      "App"
-    )!.style.backgroundImage = `url(${song.cover})`;
-    document.getElementById("App")!.style.backdropFilter = "blur(10px)";
-  }, [song, appRef]);
+    if (isDesktop) {
+      document.getElementById(
+        "App"
+      )!.style.backgroundImage = `url(${song.cover})`;
+      document.getElementById("App")!.style.backdropFilter = "blur(10px)";
+    }
+  }, [song, appRef, isDesktop]);
 
   useEffect(() => {
     const audioElement = audioRef.current;
@@ -213,8 +217,6 @@ const Card = ({ songs, appRef }: CardProps) => {
     }
     setSong(songs[randomIndex]);
   }, [song, songs]);
-
-  const isDesktop = window.matchMedia("(min-width: 768px)").matches;
 
   return (
     <div
