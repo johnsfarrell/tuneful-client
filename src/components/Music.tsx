@@ -179,11 +179,10 @@ const Card = ({ songs, appRef }: CardProps) => {
       setPlayTime(0);
     });
 
-    const appElement = appRef.current;
-    if (appElement) {
-      appElement.style.backgroundImage = `url(${song.cover})`;
-      appElement.style.backdropFilter = "blur(10px)";
-    }
+    document.getElementById(
+      "App"
+    )!.style.backgroundImage = `url(${song.cover})`;
+    document.getElementById("App")!.style.backdropFilter = "blur(10px)";
   }, [song, appRef]);
 
   useEffect(() => {
