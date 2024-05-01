@@ -29,7 +29,7 @@ const Intermediate = ({ pageProps, setIsAuthenticated }: IntermediateProps) => {
   const [signedInWithSpotify, setSignedInWithSpotify] = useState(false);
   const [signedInWithoutSpotify, setSignedInWithoutSpotify] = useState(false);
   const [genreChoice, setGenreChoice] = useState("");
-  const [playlistChoice, setPlaylistChoice] = useState("");
+  const [playlistChoice, setPlaylistChoice] = useState<{ name: string }>();
   const getPlaylists = useCallback(() => {
     console.log("token: " + token);
 
@@ -102,7 +102,9 @@ const Intermediate = ({ pageProps, setIsAuthenticated }: IntermediateProps) => {
         <h1 className="intermediate">Select to Start</h1>
 
         <h2 id="select-header">
-          {playlistChoice ? `Chosen: ${playlistChoice}` : "Select a Playlist"}
+          {playlistChoice
+            ? `Chosen: ${playlistChoice.name}`
+            : "Select a Playlist"}
         </h2>
         <div className="radio-group">
           {playlists.map((playlist: { name: string }) => (
@@ -112,7 +114,7 @@ const Intermediate = ({ pageProps, setIsAuthenticated }: IntermediateProps) => {
                 id={playlist.name}
                 name="playlist"
                 value={playlist.name}
-                onChange={(e) => setPlaylistChoice(e.target.value)}
+                onChange={(e) => setPlaylistChoice(playlist)}
               ></input>
               <label htmlFor={playlist.name}>{playlist.name}</label>
             </div>
@@ -137,14 +139,13 @@ const Intermediate = ({ pageProps, setIsAuthenticated }: IntermediateProps) => {
             </div>
           ))}
         </div>
-        <p>{playlistChoice}</p>
+        <p>{playlistChoice?.name}</p>
         <p>{genreChoice}</p>
 
         <button onClick={handleContinue}>Continue</button>
-        <button onClick={handleBackClick}
-        style={{ marginTop: "20px"}}>
-        {"back"}
-      </button>
+        <button onClick={handleBackClick} style={{ marginTop: "20px" }}>
+          {"back"}
+        </button>
         <button onClick={handleLogout} style={{ marginTop: "20px" }}>
           Logout
         </button>
@@ -184,14 +185,12 @@ const Intermediate = ({ pageProps, setIsAuthenticated }: IntermediateProps) => {
           ))}
         </div>
 
-        <p>{playlistChoice}</p>
+        <p>{playlistChoice?.name}</p>
         <p>{genreChoice}</p>
 
         <button onClick={handleContinue}>Continue</button>
-        <button 
-        onClick={handleBackClick}
-        style={{ marginTop: "20px"}}>
-        {"back"}
+        <button onClick={handleBackClick} style={{ marginTop: "20px" }}>
+          {"back"}
         </button>
         <button onClick={handleLogout} style={{ marginTop: "20px" }}>
           Logout
